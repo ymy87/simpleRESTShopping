@@ -1,0 +1,12 @@
+{
+  "name": "simpleRest",
+  "version": "0.1.0",
+  "description": "Simple Example of REST webserver managing an array of JSON literals",
+  "author": "Tim Hickey <tjhickey@brandeis.edu> (http://www.cs.brandeis.edu/~tim)",
+  "scripts": {
+    "start": "node --harmony ./simpleREST.js"
+  },
+  "dependencies": {
+    "express": "~4.4.3"
+  }
+}

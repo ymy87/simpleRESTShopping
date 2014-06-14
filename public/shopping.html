@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+    <title>Shopping List</title>
+    <link href="bootstrap.css" rel="stylesheet" />
+    <link href="bootstrap-theme.css" rel="stylesheet" />
+    <script src="angular.js"></script>
+    <script src="shopping.js"></script>
+
+</head>
+<body ng-controller="ToDoCtrl">
+    <div class="page-header">
+        <h1>
+            {{todo.user}}'s Shopping List
+            <span class="label label-default" ng-class="warningLevel()"
+                  ng-hide="incompleteCount() == 0">
+                {{incompleteCount()}}
+            </span>
+        </h1>
+    </div>
+    <div class="panel">
+        <div class="input-group">
+            <input class="form-control" ng-model="actionText" />
+            <span class="input-group-btn">
+                <button class="btn btn-default"
+                        ng-click="addNewItem(actionText)">Add</button>
+            </span>
+        </div>
+
+	<div class="panel">
+	  Total Price for all items is {{totalcost()}}
+	<br/>
+	  Total Number of items to buy is {{totalItems()}}
+	</div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Done</th>
+                    <th>Item Price</th>
+                    <th>Quantity</th>
+					<th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat=
+                        "item in todo.items | bigOrderItems:todo.cutoff | checkedItems:showComplete | orderBy:'quantity'">
+                    <td>{{item.action}}</td>
+                    <td><input type="checkbox" ng-model="item.done" /></td>
+                    <td><input type="number" ng-model="item.price" /></td>
+                    <td><input type="number" ng-model="item.quantity" /></td>
+                    <td>{{item.price * item.quantity}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="checkbox-inline">
+            <label><input type="checkbox" ng_model="showComplete"> 
+	            Show Complete</label>
+        </div>
+
+        <div class="checkbox-inline">
+            <label><input type="number" ng_model="todo.cutoff" > 
+	            Cutoff</label>
+        </div>
+    </div>
+
+</body>
+</html>
