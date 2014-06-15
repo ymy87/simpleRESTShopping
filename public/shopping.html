@@ -27,6 +27,7 @@
             </span>
         </div>
 
+
 	<div class="panel">
 	  Total Price for all items is {{totalcost()}}
 	<br/>
@@ -51,6 +52,11 @@
                     <td><input type="number" ng-model="item.price" /></td>
                     <td><input type="number" ng-model="item.quantity" /></td>
                     <td>{{item.price * item.quantity}}</td>
+					<td>
+						<button class="btn btn-default"
+		                        ng-click="putItem(item)">Add</button>
+						
+					</td>
                 </tr>
             </tbody>
         </table>

@@ -10,7 +10,13 @@ const
   bodyParser = require('body-parser'), // this allows us to pass JSON values to the server (see app.put below)
   app = express();
   
-var myData = ["hola","mundo","a","b","c","d"];
+var myData = 
+[
+ {"id":0, "action": "Flowers", "done": false, "price":1, "quantity":5 },
+ {"id":1, "action": "Shoes",   "done": false, "price":2, "quantity":4 },
+ {"id":2, "action": "Tickets", "done": true,  "price":3, "quantity":30 },
+ {"id":3, "action": "Coffee",  "done": false, "price":4, "quantity":2 }
+];
 
 // serve static content from the public folder 
 app.use("/",express.static(__dirname + '/public'));
@@ -20,39 +26,34 @@ app.use(bodyParser.json());
 
 // create middleware to log the requests
 app.use(function(req, res, next){
-  console.log('%s %s', req.method, req.url);
+  console.log('%s %s %s', req.method, req.url, JSON.stringify(req.body));
   next();
 });
 
-// define functionality for handling get request of the form /greeting/NAME
+// get a particular item from the model
 app.get('/model/:id', function(req, res) {
     var n = req.params.id;
-    console.log("get id="+n+" typeof(n)="+typeof(n));
-  res.json(200, { "id": myData[n] });
+    res.json(200, myData[n]);
 });
 
-app.get('/showall', function(req, res) {
-    var n = req.params.id;
-    console.log("get id="+n+" typeof(n)="+typeof(n));
-  res.json(200, { "id": myData });
+// get all items from the model
+app.get('/showall.json', function(req, res) {
+    res.json(200, myData );
 });
 
-// define functionality for handling get request of the form /greeting/NAME
+// change an item in the model
 app.put('/model/:id', function(req, res) {
     var n = req.params.id;
-    console.log("put id="+n+"request = "+req.body);
-    var body = req.body;
-    myData[body.id] = body.val;
-  res.json(200, { "id": body.id, "val": myData[body.id] });
+    myData[n] = req.body;
+    // put in some error checking if n <= myData.length
+  res.json(200, {});
 });
 
-// define functionality for handling get request of the form /greeting/NAME
-app.post('/model/:id', function(req, res) {
-      var n = req.params.id;
-      console.log("post id="+n+"request = "+req.body);
-      var body = req.body;
-      myData[body.id] = body.val;
-    res.json(200, { "id": body.id, "val": myData[body.id] });
+// add new item to the model
+app.post('/model', function(req, res) {
+      req.body.id = myData.length;
+      myData.push(req.body);
+      res.json(200, {});
 });
 
 
