@@ -32,6 +32,9 @@
 	  Total Price for all items is {{totalcost()}}
 	<br/>
 	  Total Number of items to buy is {{totalItems()}}
+	<br/>
+	<button class="btn btn-default" ng-click="getItems()">
+		Refresh</button>
 	</div>
 
         <table class="table table-striped">
@@ -48,15 +51,20 @@
                 <tr ng-repeat=
                         "item in todo.items | bigOrderItems:todo.cutoff | checkedItems:showComplete | orderBy:'quantity'">
                     <td>{{item.action}}</td>
+					<td>
+						<button class="btn btn-default" ng-click="putItem(item)">
+							update</button>
+						
+					</td>
                     <td><input type="checkbox" ng-model="item.done" /></td>
                     <td><input type="number" ng-model="item.price" /></td>
                     <td><input type="number" ng-model="item.quantity" /></td>
                     <td>{{item.price * item.quantity}}</td>
 					<td>
-						<button class="btn btn-default"
-		                        ng-click="putItem(item)">Add</button>
-						
+						<button class="btn btn-default" ng-click="deleteItem(item)"/>
+						    delete</button>
 					</td>
+
                 </tr>
             </tbody>
         </table>

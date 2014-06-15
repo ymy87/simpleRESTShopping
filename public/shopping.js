@@ -78,7 +78,13 @@ todoApp.controller("ToDoCtrl", function($scope, $http) {
     $scope.getItems = function() {
         $http.get("/showall.json").success(function(data) {
             $scope.todo.items = data;
-            $scope.$apply();
+        })
+    };
+    
+    $scope.deleteItem = function(item) {
+        $http.delete("/model/"+item.id).success(function() {
+            console.log("just deleted "+JSON.stringify(item));
+            $scope.getItems();
         })
     };
 
