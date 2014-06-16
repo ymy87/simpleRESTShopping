@@ -9,6 +9,7 @@
 
 </head>
 <body ng-controller="ToDoCtrl">
+  <div class="container">
     <div class="page-header">
         <h1>
             {{todo.user}}'s Shopping List
@@ -16,54 +17,67 @@
                   ng-hide="incompleteCount() == 0">
                 {{incompleteCount()}}
             </span>
+
         </h1>
     </div>
+
+	<div class="panel">
+	  Total Price for all {{totalItems()}} items is ${{totalcost()}}
+	<br/>
+
+	</div>
+
     <div class="panel">
         <div class="input-group">
+		    <span class="input-group-btn" >
+			     <button class="btn btn-default" 
+			             ng-click="getItems()">
+				     Refresh</button>
+				</span>
             <input class="form-control" ng-model="actionText" />
             <span class="input-group-btn">
                 <button class="btn btn-default"
                         ng-click="addNewItem(actionText)">Add</button>
             </span>
+			</div>
+
+
         </div>
 
 
-	<div class="panel">
-	  Total Price for all items is {{totalcost()}}
-	<br/>
-	  Total Number of items to buy is {{totalItems()}}
-	<br/>
-	<button class="btn btn-default" ng-click="getItems()">
-		Refresh</button>
-	</div>
 
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Description</th>
-                    <th>Done</th>
                     <th>Item Price</th>
                     <th>Quantity</th>
 					<th>Total Price</th>
+					<th>Edit</th>
+					<th>Purchased</th>
+					<th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat=
                         "item in todo.items | bigOrderItems:todo.cutoff | checkedItems:showComplete | orderBy:'quantity'">
                     <td>{{item.action}}</td>
-					<td>
-						<button class="btn btn-default" ng-click="putItem(item)">
-							update</button>
-						
-					</td>
-                    <td><input type="checkbox" ng-model="item.done" /></td>
-                    <td><input type="number" ng-model="item.price" /></td>
-                    <td><input type="number" ng-model="item.quantity" /></td>
+
+
+
+                    <td><input type="number" ng-model="item.price" ng-hide="!item.edit" /> 
+						<span ng-hide="item.edit">{{item.price}}</span>
+						</td>
+                    <td><input type="number" ng-model="item.quantity" ng-hide="!item.edit"/>
+							<span ng-hide="item.edit">{{item.quantity}}</span></td>
                     <td>{{item.price * item.quantity}}</td>
-					<td>
-						<button class="btn btn-default" ng-click="deleteItem(item)"/>
-						    delete</button>
-					</td>
+
+					<td><input type="checkbox" ng-model="item.edit" ng-change="item.edit?true:putItem(item)"/></td>
+					
+                    <td><input type="checkbox" ng-model="item.done" /></td>
+
+					<td><input type="checkbox" ng-model="item.edit" ng-change="deleteItem(item)"/></td>
+
 
                 </tr>
             </tbody>
@@ -71,7 +85,7 @@
 
         <div class="checkbox-inline">
             <label><input type="checkbox" ng_model="showComplete"> 
-	            Show Complete</label>
+	            Show Purchased Items</label>
         </div>
 
         <div class="checkbox-inline">
@@ -79,6 +93,6 @@
 	            Cutoff</label>
         </div>
     </div>
-
+ </div>
 </body>
 </html>
