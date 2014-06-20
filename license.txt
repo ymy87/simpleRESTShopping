@@ -1,3 +1,5 @@
+add at top
+
 This is released under Creative Commons ....Authors are:
 
 Timothy Hickey
@@ -5,3 +7,5 @@ hihihi
 
 sam raphael
 yuya yoshida
+
+William Tarimo
